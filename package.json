@@ -1,0 +1,20 @@
+{
+  "name": "TypeScript",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HwangYoonSeong/TypeScript.git"
+  },
+  "author": "yooncastle <dbstjd427@gmail.com>",
+  "license": "MIT",
+  "description": "Learn TS",
+  "bugs": {
+    "url": "https://github.com/HwangYoonSeong/TypeScript/issues"
+  },
+  "homepage": "https://github.com/HwangYoonSeong/TypeScript#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": []
+}
