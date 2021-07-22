@@ -132,14 +132,90 @@ type Color = 'red' | 'orange' | 'yellow';
 const color: Color = 'red';
 const colors: Color[] = ['red', 'orange'];
 
-  // 우리가 이번에 type 과 interface 를 배웠는데,
-  // 어떤 용도로 사용을 해야 할까요? 
-  // 무엇이든 써도 상관 없는데 일관성 있게만 쓰시면 됩니다.
-  // 구버전의 타입스크립트에서는 type 과 interface 의 차이가 많이 존재했었는데
-  // 이제는 큰 차이는 없습니다. 
-  // 다만 라이브러리를 작성하거나 다른 라이브러리를 위한 
-  // 타입 지원 파일을 작성하게 될 때는 
-  // interface를 사용하는것이 권장 되고 있습니다.
+// 우리가 이번에 type 과 interface 를 배웠는데,
+// 어떤 용도로 사용을 해야 할까요? 
+// 무엇이든 써도 상관 없는데 일관성 있게만 쓰시면 됩니다.
+// 구버전의 타입스크립트에서는 type 과 interface 의 차이가 많이 존재했었는데
+// 이제는 큰 차이는 없습니다. 
+// 다만 라이브러리를 작성하거나 다른 라이브러리를 위한 
+// 타입 지원 파일을 작성하게 될 때는 
+// interface를 사용하는것이 권장 되고 있습니다.
 
-  //////////////////////////////////////////////////////////////////////////////////////
-// # Generics
+//////////////////////////////////////////////////////////////////////////////////////
+// # Generics 
+
+// 어떤 타입이 올 지 모르는 상황에서는 any 타입 
+
+// function merge(a: any, b: any): any {
+//     return {
+//         ...a,
+//         ...b
+//     };
+// }
+
+// const merged = merge({ foo: 1 }, { bar: 1 });
+
+//그런데, 이렇게 하면 타입 유추가 모두 깨진거나 다름이 없음
+
+// 이런 상황에서 Generics 사용 
+function merge<A, B>(a: A, b: B): A & B {
+    return {
+        ...a,
+        ...b
+    };
+}
+
+const merged = merge({ foo: 1 }, { bar: 1 });
+// console.log(merged);
+
+function wrap<T>(param: T) {
+    return {
+        param
+    }
+}
+
+const wrapped = wrap(10);
+
+// interface에서 Generics 사용 
+interface Items<T> {
+    list: T[];
+}
+
+const items: Items<string> = {
+    list: ['a', 'b', 'c']
+};
+
+// type 에서 Generics 사용하기
+type Items2<T> = {
+    list: T[];
+};
+
+const items2: Items<string> = {
+    list: ['a', 'b', 'c']
+};
+
+// 클래스에서 Generics 사용 
+class Queue<T> {
+    list: T[] = [];
+    get length() {
+        return this.list.length;
+    }
+    enqueue(item: T) {
+        this.list.push(item);
+    }
+    dequeue() {
+        return this.list.shift();
+    }
+}
+
+const queue = new Queue<number>();
+queue.enqueue(0);
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.enqueue(4);
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
